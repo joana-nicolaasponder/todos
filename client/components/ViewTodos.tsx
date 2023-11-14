@@ -22,13 +22,24 @@ function ViewTodos() {
 
   return (
     <>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.taskDetails}, Priority: {todo.priority}
-          </li>
-        ))}
-      </ul>
+      <section className="main">
+        <ul className="todo-list">
+          {todos.map((todo) => (
+            <li key={todo.id} className={todo.completed ? 'completed' : ''}>
+              <div className="view">
+                <input
+                  className="toggle"
+                  type="checkbox"
+                  checked={todo.completed}
+                />
+                <label>{todo.taskDetails}</label>
+                <button className="destroy"></button>
+              </div>
+              <input className="edit" value={todo.taskDetails} />
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   )
 }

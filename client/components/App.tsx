@@ -6,10 +6,11 @@ function App() {
     <>
       <header className="header">
         <h1>todos</h1>
-        <ViewTodos />
-        {/* <AddTodo /> */}
+        <AddTodo />
       </header>
-      <section className="main"></section>
+      <section className="main">
+        <ViewTodos />
+      </section>
       <footer className="footer"></footer>
     </>
   )
