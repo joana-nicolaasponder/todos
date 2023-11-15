@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react'
 import { Tasks } from '../../models/Tasks'
 import { getTaskList } from '../apis/apiClient'
+import { getAllTasks } from '../../server/db/dbFunctions'
+import { useQuery } from '@tanstack/react-query'
 
-const initialTasks: Tasks[] = []
+// const initialTasks: Tasks[] = []
 function ViewTodos() {
-  const [todos, setTodos] = useState(initialTasks as Tasks[])
+  const {
+    data: todos,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['tasks'],
+    queryFn: () => getTaskList(),
+  })
 
-  useEffect(() => {
-    try {
-      // eslint-disable-next-line no-inner-declarations
-      async function fetchTodos() {
-        const initialTasks = await getTaskList()
-        console.log('this is from the VIEW Component', initialTasks)
-        setTodos(initialTasks)
-      }
-      fetchTodos()
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+  if (error) {
+    return <p>There was an error fetching the tasks</p>
+  }
+
+  if (!todos || isLoading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <>
