@@ -7,7 +7,7 @@ export function up(knex) {
     table.increments('id')
     table.string('taskDetails')
     table.string('priority')
-    table.boolean('completed')
+    table.boolean('completed').defaultTo(false)
   })
 }
 

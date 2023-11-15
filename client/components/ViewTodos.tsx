@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
-import { Tasks } from '../../models/Tasks'
-import { getTaskList } from '../apis/apiClient'
-import { getAllTasks } from '../../server/db/dbFunctions'
-import { useQuery } from '@tanstack/react-query'
+import { ChangeEvent } from 'react'
+import { checkOffTask, getTaskList } from '../apis/apiClient'
 
-// const initialTasks: Tasks[] = []
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
 function ViewTodos() {
+  const queryClient = useQueryClient()
+
+  const checkedTask = useMutation(checkOffTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
+
   const {
     data: todos,
     isLoading,
@@ -23,6 +29,12 @@ function ViewTodos() {
     return <p>Loading...</p>
   }
 
+  function handleCheckOffTask(id: number) {
+    checkedTask.mutate(id)
+  }
+
+  
+
   return (
     <>
       <section className="main">
@@ -31,6 +43,7 @@ function ViewTodos() {
             <li key={todo.id} className={todo.completed ? 'completed' : ''}>
               <div className="view">
                 <input
+                  onChange={() => handleCheckOffTask(todo.id)}
                   className="toggle"
                   type="checkbox"
                   checked={todo.completed}
