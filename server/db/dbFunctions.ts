@@ -15,3 +15,7 @@ export function addTask(task: TaskData) {
 export function checkOffTask(id: number) {
   return db('tasks').where('id', id).update({ completed: true })
 }
+
+export function deleteTask(id: number) {
+  return db('tasks').where('id', id).delete().returning('*')
+}

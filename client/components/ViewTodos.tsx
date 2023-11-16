@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { checkOffTask, getTaskList } from '../apis/apiClient'
+import { checkOffTask, deleteTask, getTaskList } from '../apis/apiClient'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -7,6 +7,12 @@ function ViewTodos() {
   const queryClient = useQueryClient()
 
   const checkedTask = useMutation(checkOffTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
+
+  const deleteTodo = useMutation(deleteTask, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },
@@ -33,7 +39,9 @@ function ViewTodos() {
     checkedTask.mutate(id)
   }
 
-  
+  function handleClick(id: number) {
+    deleteTodo.mutate(id)
+  }
 
   return (
     <>
@@ -49,7 +57,10 @@ function ViewTodos() {
                   checked={todo.completed}
                 />
                 <label>{todo.taskDetails}</label>
-                <button className="destroy"></button>
+                <button
+                  className="destroy"
+                  onClick={() => handleClick(todo.id)}
+                ></button>
               </div>
               <input className="edit" value={todo.taskDetails} />
             </li>

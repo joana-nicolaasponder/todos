@@ -1,8 +1,20 @@
 import express from 'express'
 
-import { addTask, checkOffTask, getAllTasks } from '../db/dbFunctions'
+import {
+  addTask,
+  checkOffTask,
+  deleteTask,
+  getAllTasks,
+} from '../db/dbFunctions'
 
 const router = express.Router()
+
+//DELETE
+router.delete('/', async (req, res) => {
+  const task = req.body.id
+  const tasks = await deleteTask(task)
+  res.json(tasks)
+})
 
 //PATCH /api/v1/todos
 router.patch('/', async (req, res) => {

@@ -18,3 +18,8 @@ export async function checkOffTask(id: number): Promise<Tasks[]> {
   const response = await request.patch(url).send({ id: id })
   return response.body
 }
+
+export async function deleteTask(id: number): Promise<Tasks[]> {
+  const response = await request.delete(url).send({ id: id })
+  return response.body
+}

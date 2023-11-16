@@ -6,7 +6,7 @@ export function up(knex) {
   return knex.schema.createTable('tasks', (table) => {
     table.increments('id')
     table.string('taskDetails')
-    table.string('priority')
+    table.string('priority').defaultTo('Low')
     table.boolean('completed').defaultTo(false)
   })
 }
