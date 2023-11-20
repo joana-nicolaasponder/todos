@@ -1,8 +1,6 @@
-import knex from 'knex'
-import config from '../db/knexfile'
 import { TaskData } from '../../models/Tasks'
 
-const db = knex(config.development)
+import db from './connection'
 
 export function getAllTasks() {
   return db('tasks').select('*')
