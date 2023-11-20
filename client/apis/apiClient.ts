@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Tasks, TaskData, Task } from '../../models/Tasks'
+import { Tasks, Task } from '../../models/Tasks'
 
 const url = '/api/v1/todos'
 export async function getTaskList(): Promise<Tasks[]> {

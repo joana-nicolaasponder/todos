@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import { checkOffTask, deleteTask, getTaskList } from '../apis/apiClient'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
