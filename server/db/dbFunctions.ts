@@ -2,11 +2,12 @@ import { TaskData } from '../../models/Tasks'
 
 import db from './connection'
 
-export function getAllTasks() {
+export async function getAllTasks() {
   return db('tasks').select('*')
 }
 
 export function addTask(task: TaskData) {
+  
   return db('tasks').insert(task).returning('*')
 }
 

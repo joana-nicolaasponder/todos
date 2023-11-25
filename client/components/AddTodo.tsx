@@ -14,7 +14,6 @@ function AddTodo() {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },
   })
-  
 
   const handleInputChange = (event) => {
     setTodoText(event.target.value)
@@ -33,6 +32,7 @@ function AddTodo() {
       <form onSubmit={handleAddTodo}>
         <input
           className="new-todo"
+          aria-label="new-task-details"
           placeholder="What needs to be done?"
           autoFocus={true}
           // onSubmit={handleSubmit}
