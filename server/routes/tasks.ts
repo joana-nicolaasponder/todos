@@ -49,6 +49,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const tasks = await getAllTasks()
+    console.log(tasks)
     res.json(tasks)
   } catch (error) {
     console.error('Error in GET route:', error)
