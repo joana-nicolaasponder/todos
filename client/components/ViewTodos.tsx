@@ -51,6 +51,7 @@ function ViewTodos() {
             <li key={todo.id} className={todo.completed ? 'completed' : ''}>
               <div className="view">
                 <input
+                  name={`checkbox-${todo.id}`}
                   id={`checkbox-${todo.id}`}
                   aria-label="task-details"
                   onChange={() => {
@@ -77,7 +78,9 @@ function ViewTodos() {
                   aria-label="delete-task"
                   className="destroy"
                   onClick={() => handleClick(todo.id)}
-                  onKeyDown={(event: React.KeyboardEvent<HTMLButtonElement>) => {
+                  onKeyDown={(
+                    event: React.KeyboardEvent<HTMLButtonElement>
+                  ) => {
                     // Handle keyboard events (e.g., Space or Enter key)
                     if (event.key === ' ' || event.key === 'Enter') {
                       handleClick(todo.id)

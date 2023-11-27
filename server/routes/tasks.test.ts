@@ -35,30 +35,33 @@ describe('/', () => {
   })
 
   it('calls addTask', async () => {
-    vi.mocked(addTask).mockResolvedValue({
+    vi.mocked(addTask).mockResolvedValue([{
       id: 99,
       taskDetails: 'Wash dog',
       completed: false,
-    })
+    }])
 
     const response = await request(server)
       .post('/api/v1/todos')
-      .send({ newTask: 'Wash dog' })
-    expect(vi.mocked(addTask)).toHaveBeenCalledWith('Wash dog')
+      .send({ newTask: { taskDetails: 'Wash dog' } })
+    expect(vi.mocked(addTask)).toHaveBeenCalledWith({
+      taskDetails: 'Wash dog',
+          })
     expect(response.status).toBe(200)
-    expect(response.body).toMatchInlineSnapshot(
-      {
-        completed: false,
-        id: 99,
-        taskDetails: 'Wash dog',
-      },
-      `
-      {
-        "completed": false,
-        "id": 99,
-        "taskDetails": "Wash dog",
-      }
-    `
-    )
+    expect(response.body).toEqual([{
+      completed: false,
+      id: 99,
+      taskDetails: 'Wash dog',
+    }])
+  })
+
+  it('throws an error if database fails', async () => {
+    vi.mocked(addTask).mockRejectedValue(new Error('database sad'))
+
+    const response = await request(server)
+      .post('/api/v1/todos')
+      .send({ taskDetails: 'Wash dog' })
+
+    expect(response.status).toBe(500)
   })
 })
