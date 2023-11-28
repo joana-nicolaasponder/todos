@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react'
 import { checkOffTask, deleteTask, getTaskList } from '../apis/apiClient'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -91,12 +90,6 @@ function ViewTodos() {
               <label id={`delete-label-${todo.id}`} style={{ display: 'none' }}>
                 Delete task: {todo.taskDetails}
               </label>
-              <input
-                id="edit"
-                aria-label="edit-task"
-                className="edit"
-                value={todo.taskDetails}
-              />
             </li>
           ))}
         </ul>

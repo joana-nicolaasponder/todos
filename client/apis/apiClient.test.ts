@@ -17,7 +17,10 @@ const mockTodos = [
 
 describe('Todos page renders', () => {
   it('should render', async () => {
-    const { user, ...screen } = renderApp()
+    const scope = nock('http://localhost/')
+      .get('/api/v1/todos')
+      .reply(200, mockTodos)
+    const screen = renderApp()
 
     const todos = screen.getByRole('textbox', { name: 'new-task-details' })
 
@@ -41,7 +44,7 @@ describe('Todos page renders', () => {
       .post('/api/v1/todos', { newTask: { taskDetails: 'New todo' } })
 
       .reply(200, [
-        { id: 31, taskDetails: 'Banana', priority: 'Low', completed: false },
+        { id: 31, taskDetails: 'New todo', priority: 'Low', completed: false },
       ])
 
     const { user, ...screen } = renderApp()
